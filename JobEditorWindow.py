@@ -1,0 +1,62 @@
+from PyQt4.QtGui import *
+from PyQt4.QtCore import *
+from qgis.core import *
+
+class DockWindow( QDockWidget ):
+
+    def __init__( self, parent, widget, name ):
+        QDockWidget.__init__( self, parent )
+        self._name = name
+        self.setWidget(widget)
+        parent.addDockWidget( Qt.BottomDockWidgetArea, self )
+        self.restoreLocation(True)
+        self.topLevelChanged.connect( self.saveLocation )
+
+    def onTopLevelChanged( self, toplevel ):
+        if isFloating():
+            restoreLocation(False)
+        self.saveLocation()
+
+    def resizeEvent( self, event ):
+        if self.isFloating():
+            self.saveLocation()
+
+    def moveEvent( self, event ):
+        if self.isFloating():
+            self.saveLocation()
+
+    def saveLocation( self ):
+        from Plugin import Plugin
+        if not self._name:
+            return
+        base = Plugin.SettingsBase + self._name + '/'
+        settings = QSettings()
+        floating = self.isFloating()
+        settings.setValue(base+"Editor/Floating",floating)
+        if floating:
+            location = ' '.join((
+                str(self.pos().x()),
+                str(self.pos().y()),
+                str(self.size().width()),
+                str(self.size().height())
+                ))
+            settings.setValue(base+"Editor/Location",location)
+
+    def restoreLocation( self, restoreFloating ):
+        if not self._name:
+            return
+        try:  
+            from Plugin import Plugin
+            base = Plugin.SettingsBase + self._name + '/'
+            settings = QSettings()
+            if restoreFloating:
+                floating = settings.value(base+"Editor/Floating").toBool()
+                self.setFloating( floating )
+            if self.isFloating():
+                location =str(settings.value(base+"Editor/Location"))
+                parts = location.split(' ')
+                self.setSize(int(parts[0]),int(parts[1]))
+                self.setPos(int(parts[2]),int(parts[3]))
+        except:
+            pass
+

@@ -1,0 +1,44 @@
+<html>
+	<head>
+		<title>Address upload application - developer notes</title></head>
+	<link rel="stylesheet" type="text/css" href="styles.css" />
+	<body>
+		<h1>Address upload application - developer notes</h1>
+		<p>See the <a href="overview.html">overview</a> for details of the address upload application.</p>
+		<p>This page provides concise pointers to useful information for developers maintaining this application</p>
+		<p>The main components of the application are:</p>
+		<ul>
+			<li>Database: Contains the data and stored procedures which do the bulk of the electoral address processing.  The database roles, schema, and stored procedure code are defined in the sql directory of the source code repository.</li>
+			<li>Python model code: Files in the ElectoralAddress package, provide the interface to the database stored procedures, and hold the functionality for reading address data from multiple formats</li>
+			<li>Python GUI code: Files in ElectoralAddress.Gui package provide the electoral address editor functions.  These can be run independently of the QGIS plugin using the UploadAddresses.py python script.  </li>
+			<li>Python QGIS plugin code. Defined in the ElectoralAddressLoader directory.  This contains the plugin management code, and the code for the Address info tool and Address highlighter.  </li>
+		</ul>
+		<h2>Database</h2>
+		<p>The database connection is defined in the ElectoralAddress.Daatabase module.  For the application this is configured in the ElectoralAddress.Gui.Config module, which stores the database settings in using the users registry using the Qt QSetting module.  The settings are in the "Software/Land Information New Zealand/Electoral Address Loader/Database" key.  The configuration may be updated using the ConfigureDatabase.py script in the GUI folder.
+		</p>
+		<p>The database contains the following tables:</p>
+		<ul>
+			<li><b>code</b>: System codes used by the application. codes are defined by a code_type and a code.  The code_type collects codes into gourps such as &quot;job_status&quot;.</li>
+			<li><b>source_type</b>: Details of the data source types</li>
+			<li><b>supplier</b>: Suppliers, defining the source type and territorial authority</li>
+			<li><b>job</b>: Upload jobs</li>
+			<li><b>address</b>: Addresses for each job</li>
+			<li><b>upload</b>: Uploads to Landonline</li>
+
+		</ul>
+		<p>
+		Most of the application business logic is handled in the database stored procedures. Some significant components to be aware of from a development point of view are:
+		</p>
+		<ul>
+			<li>The address update trigger.  The trigger function _elc_trg_SetAddressStatus is defined in the electoral_address_schema.sql file. Its main function is to manage the address status information, including warnings and landonline linkage.  This has been placed in a trigger to ensure that alternative update process (eg scripted or backend changes) preserve the integrity of this information.</li> 
+			<li>Linkage to landonline. The linkage to landonline addresses, streets, etc is based on Landonline mirror tables in the &quot;bde&quot; schema in the database, which are assumed to be maintained by daily incremental BDE updates.  So when a job is opened the scripts first ensure that the linkages are up to date.  The job table contains a link_date field which is used to derermine when the linkages were last maintained.  If this is not on the current date, then they will be restored.  Linkages also need to be restored if objects are moved (so that spatial relationships become invalidated).  This is controlled by the elc_RefreshJobLinks and _elc_RefreshLinks functions.
+			</li>
+			<h2>Outstanding tasks</h2>
+			<p>The following issues are outstanding in this application</p>
+			<ul>
+				<li>Handling changing the territorial authority version in Landonline.  This changes the ids of each territorial authority area.  This will mean that the id of suppliers will no longer match the id identified by spatial linking with landonline.</li>
+				<li>Displaying road names on roads in QGIS.  This has two issues.  The simpler one is that road names are in a many to many relationship with roads.  The more complex issues in how to display this information in a cartographically acceptable way in QGis (ie along road names, not repeated more often than necessary, and within section(s) of road in the current view if it is long enough)</li>
+			</ul>
+	</body>
+</html>
+

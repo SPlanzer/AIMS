@@ -1,0 +1,101 @@
+<html>
+	<head><title>Address reader types</title></head>
+	<link rel="stylesheet" type="text/css" href="styles.css" />
+	<body>
+		<h1>Address reader types</h1>
+		<p>The electoral address application can support multiple address reader types - python modules used to extract addresses from supplied data.</p>
+		<p>Each reader type is implemented into <a href="overview.html#source_types">data source types</a> by defining <a href="#parameters">parameters</a>, generally to specify which fields in the data source contain the various components of the supplied address.</p>
+
+		<p>Some normalisation of numbers and road names takes place before they are loaded.  They are converted to upper case and trimmed of leading and trailing spaces.  Additionally &quot;STATE&nbsp;HIGHWAY&nbsp;<i>nn</i>&quot; is converted to &quot;SH&nbsp;<i>nn</i>&quot;.
+
+
+		<h2><a name="OgrReader"></a>The OGR address reader</h2>
+		<p>The OGR address reader is usd to read addresses from data files 
+		using the OGR simple feature library.  This supports a wide 
+		range of geospatial data formats, such as ESRI shape files, 
+		MapInfo tab files, and so on.</p>
+		<p>The reader extracts the spatial location of the feature from
+		the data file, as well as the attributes.</p>
+		<p>
+		The reader takes the following <a href="#parameters">parameters</a>
+		</p>
+		<ul class="parameterlist">
+			<li>id: Identifies the field(s) containing the suppliers reference for the address.  This is optional</li>
+			<li>roadname: Identifies the field(s) containing the roadname of the address</li>
+			<li>number: Identifies the field(s) containing the number of the address</li>
+			<li>status: Identifies the field(s) containing the supplier status of the address. Currently the only value recognized by the application is 'DELE'.  Any other values are ignored.  This is optional.</li>
+		</ul>
+
+		<h2><a name="CsvReader"></a>The CSV address reader</h2>
+		<p>The CSV address reader is usd to read addresses from comma separated (CSV) files.  This supports CSV files compatible with Microsoft Excel.  
+		It assumes that the first line in the CSV file contains the names
+		of the fields in the file.  
+		</p>
+		<p>The reader extracts the spatial location of the feature from
+		the easting and northing coordinates in the  file.</p>
+		<p>
+		The reader takes the following <a href="#parameters">parameters</a>
+		</p>
+		<ul class="parameterlist">
+			<li>id: Identifies the field(s) containing the suppliers reference for the address.  This is optional</li>
+			<li>east: Identifies the field containing the easting or longitude of the address point.</li>
+			<li>north: Identifies the field containing the northing or latitude of the address point.</li>
+			<li>roadname: Identifies the field(s) containing the roadname of the address</li>
+			<li>number: Identifies the field(s) containing the number of the address</li>
+			<li>status: Identifies the field(s) containing the supplier status of the address. Currently the only value recognized by the application is 'DELE'.  Any other values are ignored.  This is optional.</li>
+		</ul>
+		<h2><a name="parameters"></a>Reader type parameters</h2>
+		<p>
+		Each reader defines parameters which express how information such as the house number, street name, etc are compiled from the data fields in the source file.</p>
+		<p>
+		The simplest form of parameter is just the name of a field, for example &quot;road_name&quot; will take the value of the road name field.
+		</p>
+		<p>Literal strings can be returned by including them in double or single quotes in the parameter definition. 
+		</p>
+		<p>Several fields may be concatenated into a parameter definition by putting them into a list.  Fields separated by just white space in the definition will be separated by whitespace in the resulting value.  Fields separated by &quot;,&quot; will be concatenated without any space.  
+		</p>
+		<p>
+		For example if the definition is &quot;road_name&nbsp;road_type&quot;, then if the road_name field contains "HIGH" and the road_type field contains "STREET", then the value resulting from the definition will be &quot;HIGH&nbsp;STREET&quot;.  Similarly, if the definition is &quot;number,&nbsp;suffix&quot;, number contains &quot;5&quot; and suffix contains &quot;B&quot; then the result will be &quot;5B&quot;.
+		</p>
+		<p>The definition can also contain the following functions for 
+		calculating values from the fields:
+		</p>
+		<table>
+			<tr>
+				<td>
+					lookup(<i>type</i>,<i>value</i>,<i>default</i>)
+				</td>
+				<td>
+					Returns the result of lookup up <i>value</i> as a code in the &quot;code&quot; database table, where the code_type is specified by <i>type</i>.  If no value matches, then <default> is returned.<br>
+					The abbreviation &quot;field/type&quot; can be used instead of &quot;lookup(&quot;type&quot;,field,field)&quot;.
+				</td>
+			</tr>
+			<tr>
+				<td>
+					if(<i>test</i>,<i>value1</i>,<i>value2</i>)
+				</td>
+				<td>
+					Returns <i>value1</i> if <i>test</i> is blank, else <i>value2</i>.
+				</td>
+			</tr>
+			<tr>
+				<td>
+					replace(<i>pattern</i>,<i>subs</i>,<i>value</i>)
+				</td>
+				<td>
+					Applies a regular expression replacement to the string.  (This uses the python re.sub function - refer to python documentation for details).
+				</td>
+			</tr>
+			<tr>
+				<td>
+					join(<i>value1</i>,<i>value2</i>,...)
+				</td>
+				<td>
+					Concatenates the strings <i>value1</i>...  This is to use the concatenated strings in other functions.
+				</td>
+			</tr>
+		</table>
+	
+	</body>
+</html>
+

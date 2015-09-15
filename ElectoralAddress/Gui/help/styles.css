@@ -1,0 +1,54 @@
+/* Stylesheet for electoral address help */
+
+body
+{
+	font-family: arial, helvetica;
+}
+
+img.dialog
+{
+	float: right;
+	margin-left: 1em;
+	max-width: 400px;
+}
+
+img.icon
+{
+	float: left;
+	margin-right: 1em;
+}
+
+div.clear
+{
+	clear: both;
+}
+
+div.contents p
+{
+	margin: 1px 0;
+	padding: 0 0;
+}
+
+span.menu_text
+{
+}
+
+span.button_text
+{
+}
+
+span.imagelabel
+{
+	color: red;
+	font-weight: bold;
+}
+
+table tr td
+{
+	vertical-align: top;
+}
+
+a.visited, a
+{
+	color: #000080;
+}

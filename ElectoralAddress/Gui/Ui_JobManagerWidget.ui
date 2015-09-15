@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>JobManagerWidget</class>
+ <widget class="QWidget" name="JobManagerWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>661</width>
+    <height>495</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QTabWidget" name="uTabManager">
+     <property name="currentIndex">
+      <number>1</number>
+     </property>
+     <widget class="JobEditorWidget" name="uJobSummaryTab">
+      <attribute name="title">
+       <string>Job summary</string>
+      </attribute>
+     </widget>
+     <widget class="AddressLinkingWidget" name="uAddressesTab">
+      <attribute name="title">
+       <string>Addresses</string>
+      </attribute>
+     </widget>
+     <widget class="ReviewQueueWidget" name="uReviewTab">
+      <attribute name="title">
+       <string>Review queue</string>
+      </attribute>
+     </widget>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_5" stretch="1,0,0,0,0">
+     <item>
+      <widget class="QLabel" name="uMessageLabel">
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="uNewJob">
+       <property name="text">
+        <string>New job</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="uSelectJob">
+       <property name="text">
+        <string>Select job</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="uSysAdmin">
+       <property name="text">
+        <string>System admin</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="uHelp">
+       <property name="text">
+        <string>Help</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>JobEditorWidget</class>
+   <extends>QWidget</extends>
+   <header>JobEditorWidget</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>AddressLinkingWidget</class>
+   <extends>QWidget</extends>
+   <header>AddressLinkingWidget</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>ReviewQueueWidget</class>
+   <extends>QWidget</extends>
+   <header>ReviewQueueWidget</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

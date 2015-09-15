@@ -1,0 +1,54 @@
+<html>
+	<head><title>System administration dialog</title></head>
+	<link rel="stylesheet" type="text/css" href="styles.css" />
+	<body>
+		<h1>System administration dialog</h1>
+		<p>See the <a href="overview.html">overview</a> for a high level description of address uploads</p>
+		<p>The system administration dialog is used to manage the 
+		suppliers and formats in which address data are supplied.</p>
+		<p>This screen has two tabs - the source type tab used to administer the <a href="overview.html#source_types">formats of data</a> supplied, and the supplier tab used to administer <a href="overview.html#suppliers">suppliers</a>.  
+
+		<div class="clear"/>
+		<img class="dialog" src="data_sources_screen.png" alt="Source types dialog screenshot"/>
+		<p>The data sources screen is used to define formats in which 
+		data is supplied.  The existing formats can be modifed, and new formats created.  
+		Note: if a job is reloaded after modifying the source type or supplier it uses then
+		the update source type will be used.
+		</p>
+		<p>
+		Select the &quot;New&quot; button to create a new data source, 
+		&quot;Save&quot; to save changes made, &quot;Cancel&quot; to 
+		undo any changes made, and &quot;Delete&quot; to delete a data 
+		source.
+		</p>
+		<p>
+		Each data source has the following attributes:
+		</p>
+		<ul>
+			<li>Name: a name used to reference the data source</li>
+			<li>Reader type: the python class used to read the data.  Currently the available class is &quot;<a href="reader_types#OgrReader.html">OgrReader</a>&quot;</li>
+			<li>Default file extension: The default file extension - this is just used when selecting new jobs to load</li>
+			<li>Coordinate system: the coordinate system of the supplied locations</li>
+			<li>Parameters: the parameters supplied to the Reader (depending on the Reader type.  Those with an asterisk are mandatory</li>
+		</ul>
+
+		<div class="clear"/>
+			<p>&nbsp;</p>
+		<img class="dialog" src="suppliers_screen.png" alt="Suppliers dialog screenshot"/>
+		<p>The suppliers tab is used to administer data suppliers.  Note that if an authority supplies data in more than one format then each format will require a separate entry in this table.
+		</p>
+		Select the &quot;New&quot; button to create a new supplier, 
+		&quot;Save&quot; to save changes made, &quot;Cancel&quot; to 
+		undo any changes made, and &quot;Delete&quot; to delete a supplier.
+		</p>
+		<p>
+		Each data source has the following attributes:
+		</p>
+		<ul>
+			<li>Name: the name used to refer to the supplier</li>
+			<li>Source data type: the source data type (as defined above) used to load the data</li>
+			<li>Territorial auth: the TA in which supplied addresses are expected to be - addresses not in this TA will have a warning attached to them.</li>
+		</ul>
+	</body>
+</html>
+

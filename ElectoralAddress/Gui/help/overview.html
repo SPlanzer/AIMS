@@ -1,0 +1,205 @@
+<html>
+	<head><title>Address uploader overview</title></head>
+	<link rel="stylesheet" type="text/css" href="styles.css" />
+	<body>
+		<h1>Address uploader overview</h1>
+		<div class="contents">
+			<p><a href="#overview">overview</a></p>
+			<p><a href="#jobs">jobs</a></p>
+			<p><a href="#addresses">addresses</a></p>
+			<p><a href="#uploads">uploads</a></p>
+			<p><a href="#source_types">source types</a></p>
+			<p><a href="#suppliers">suppliers</a></p>
+		</div>
+		<a name="overview"></a>
+		<p>
+		The electoral address tools prepares address data sets provided by
+		territorial authorities for uploading into Landonline. 
+		</p>
+		<p>The supplied addresses may be either new addresses, or updates to 
+		addresses already in Landonline.  Before they can be uploaded 
+		they must be linked to a Landonline road name that will be used 
+		by the new Landonline address point.  If they are replacing an
+		existing address point then the Landonline id of this address point must also be identified.
+		</p>
+		<p>
+		Once all the addresses are linked with Landonline address points and road names then the data set is ready for uploading.  
+		The electoral address application is used to generate SQL files
+		that are uploaded into Landonline to apply the changes.
+		</p>
+		<p>
+		Each job and the addresses in the job are maintained in a database.
+		</p>
+		<p>The following sections describe how this process is implemented.  There are also some brief <a href="developer.html">developer notes</a> providing pointers for developers looking at the code.</p>
+
+		<h2>High level process</h2>
+		<p>
+		The high level process for uploading an address data set is: 
+		</p>
+		<ul>
+			<li>Create a <a href="jobstatus_screen.html#newjob">new upload address job</a></li>
+			<li>Resolve road names not <a href="roadlinking_screen">linked to landonline roads</a>.  If this requires adding new roads to Landonline then these will not be available until the day after they are loaded into Landonline. </li>
+			<li><a href="addresslinking_screen.html">Edit</a> invalid house numbers. Valid house numbers are described <a href="#addresses">below</a></li>
+			<li>For updates to existing addresses, <a href="addresslinking_screen.html#linkaddresses">link the addresses to landonline address points</a> they are to replace</li>
+			<li>For all addresses <a href="addresslinking_screen.html#setstatus">set the status code</a> defining how they will be used</li>
+			<li>Once all the addresses in the job are resolved, <a href="jobstatus_screen.html#setcompleted">set the job status to completed</a></li>
+			<li>Once one or more jobs are completed, <a href="jobstatus_screen.html#upload">create a landonline upload</a> and install into Landonline</li>
+		</ul>
+		<h2>Concepts</h2>
+		<h3><a name="jobs"></a>Jobs</h3>
+		<p>
+		A job represents an address data set supplied by a regional authority.
+		Each job goes through three stages:
+		</p>
+		<ul>
+			<li>Work in progress: the addresses in the job are being worked on, linking with landonline and defining how they are going to be used.</li>
+			<li>Completed: All the addresses have been processed and the job is ready for uploading into Landonline.</li>
+			<li>Uploaded: The landonline SQL scripts have been generated and the job is complete.  No further edits are possible once a job is uploaded.</li>
+		</ul>
+		<h3><a name="addresses"></a>Addresses</h3>
+		<p>
+		Each job consists of a set of addresses.  These may be received in a number of formats, from
+		which the following information is extracted:
+		</p>
+		<ul>
+			<li>location: either easting/northing or latitude/longitude in a specified coordinate system</li>
+			<li>house number: the supplied number of the house (including all components, such as flat number etc.  The supplier may supply several components - these get amalgamated into a single number for use in Landonline.</li>
+			<li>road name: Again the supplier may supply several components - these get amalgamated into a single name for use in Landonline. The loading process may also expand road type abbreviations etc.</li>
+		</ul>
+		<p>
+		Additionally the following optional information may be taken from
+		the supplier
+		</p>
+		<ul>
+			<li>reference: a supplier id for the address.  This is not used by the application, but is available for reporting back to the supplier if required. </li>
+			<li>status: supplier specified action for the mark. This may will be recoded to one of the address statuses listed below.  The only supplier status respected by the application is <span class="statuscode">DELE</span> - delete.  Addresses flagged as to be deleted cannot be uploaded into Landonline.
+			</li>
+		</ul>
+		<p>
+		The application is used to prepare the address for loading into landonline.  This involves the steps:
+		</p>
+		<ul>
+			<li><a href="roadlinking_screen.html">Linking</a> the road name to a Landonline road</li>
+			<li><a href="addresslinking_screen.html">Editing</a> the house number if it is not in a valid format</li>
+			<li>Optionally <a href="addresslinking_screen.html">linking</a> the address to a Landonline address point that it will replace.</li>
+			<li>Assigning a status to the mark defining how it is to be used.</li>
+		</ul>
+		<p>
+		The application will only allow addresses to be uploaded if the number is in a standardised form. Valid forms are:
+		</p>
+		<table>
+			<tr>
+				<td>A single house number</td>
+				<td>1, 23A</td>
+			</tr>
+			<tr>
+				<td>A flat on a house number</td>
+				<td>1/23A, 5B/78</td>
+			</tr>
+			<tr>
+				<td>A range of house numbers (must be in
+				ascending order of numbers)</td>
+				<td>2-5, 23A-24G</td>
+			</tr>
+			<tr>
+				<td>A range of flats on a single number</td>
+				<td>2/3A-5/3A</td>
+			</tr>
+			<tr>
+				<td>A rural number</td>
+				<td>R/1234</td>
+			</tr>
+		</table>
+		<p>
+		The address status is set to one of the codes in the following table:
+		</p>
+		<table>
+			<tr><th>Status</th><th>Meaning</th></tr>
+			<tr>
+				<td><span class="statuscode">UNKN</span></td>
+				<td>Unknown: No action is yet defined for
+				the address.</td>
+			</tr>
+			<tr>
+				<td><span class="statuscode">BADR</span></td>
+				<td>The address is not linked with a Landonline road, so it can't be used</td>
+			</tr>
+			<tr>
+				<td><span class="statuscode">BADN</span></td>
+				<td>The house number is not in a valid format</td>
+			</tr>
+			<tr>
+				<td><span class="statuscode">NEWA</span></td>
+				<td>This is a new address to be added to Landonline</td>
+			</tr>
+			<tr>
+				<td><span class="statuscode">REPL</span></td>
+				<td>The address is replacing a linked landonline address</td>
+			</tr>
+			<tr>
+				<td><span class="statuscode">DELE</span></td>
+				<td>The address is not to be added, and the linked landonline address is to be deleted.  This only applies for addresses that
+					the supplier has given a <span class="statuscode">DELE</span> status.</td>
+			</tr>
+			<tr>
+				<td><span class="statuscode">IGNR</span></td>
+				<td>The address is to be ignored.</td>
+			</tr>
+		</table>
+		<p>
+		There are some constraints on what statuses an address can be given.  
+		If it is not linked to a road, 
+		it can only have statuses <span class="statuscode">BADR</span> and <span class="statuscode">IGNR</span>.  
+		If it is linked, but the number is badly formatted, 
+		it can only have statuses <span class="statuscode">BADN</span> and <span class="statuscode">IGNR</span>.  
+		If it not linked to a landonline address point 
+		it cannot have statuses <span class="statuscode">REPL</span> or <span class="statuscode">DELE</span>.  
+		If the supplier specified that the address it to be deleted 
+		it can only have statuses <span class="statuscode">UNKN</span>, <span class="statuscode">DELE</span>, and <span class="statuscode">IGNR</span>.
+		</p>
+		<p>A job cannot be set to completed while any addresses have codes <span class="statuscode">UNKN</span>, <span class="statuscode">BADR</a>, or  <span class="statuscode">BADN</span>.
+		</p>
+		<p>
+		The address uploader automatically links addresses with Landonline when the job is loaded.  It also checks that the links are still valid and relinks any unlinked addresses the first time the job is opened each day.
+		The following links are applied automatically:	
+		</p>
+		<ul>
+			<li>the address is linked to the nearest road with the same name, within a radius of 2000m</li>
+			<li>the address is linked with the nearest address point within 10cm of its location, or the nearest address point within 500m with the same number and roadname, or the nearest address within 500m on the same parcel.  It will also assign a status of <span class="statuscode">REPL</span> if the point is with 10cm or has the same address, and <span class="statuscode">IGNR</span> if both apply.</li>
+
+		</ul>
+		<p>At the same time as linking to Landonline roads and addresses the loader identifies which parcel and TA the address lies in, and also identifies clusters of addresses (addresses which have the same location, within 10cm).
+		</p>
+		<p>Several warnings may be placed on an address when it is loaded.  These include:
+		</p>
+		<ul>
+			<li>Address doesn't match a nearby landonline road</li>
+			<li>The address has been linked to a Landonline address point on a different parcel</li>
+			<li>There are other address points on the Landonline parcel</li>
+			<li>The TA doesn't match that defined for the <a href="#suppliers">supplier</a></li>
+		</ul>
+		<h3><a name="uploads"></a>Uploads</h3>
+		<p>Once all the addresses in a job have been linked and had statuses defined the job can be <a href="job_status_screen.html">set to completed</a>.
+		Any jobs that are completed may then be uploaded into the landonline.  To do this an <a href="uploads_screen.html">upload dataset is created</a> and SQL files generated from it.  The generated SQL script deletes Landonline address points that are flagged <span class="statuscode">REPL</span> or <span class="statuscode">DELE</span>, then inserts new address points for addresses flagged <span class="statuscode">NEWA</span> or <span class="statuscode">REPL</span>.  (Note that replacements are handled by deletion and then insertion of a new point).
+		</p>
+		<p>
+		Previous uploads can be reviewed and the corresponding SQL file regenerated.
+		</p>
+		<h3><a name="source_types"></a>Source types</h3>
+		<p>
+		The source type is defines how data is to be read from files supplied by a regional authority.  New source types are defined using the <a href="sysadmin_screen.html">system adminstration dialogs</a>.  Each source type has a name used to identify it, defines the following parameters:
+		</p>
+		<ul>
+			<li>Reader type: the python class(!) used to read the file.  Currently the two supported types are <a href="reader_types.html#OgrReader">OgrReader</a>, which reads spatial data types such as ESRI shape files and MapInfo TAB files, and <a href="reader_types.html#CsvReader">CsvReader</a>, which reads address information from a Microsoft Excel compatible CSV fle.</li>
+			<li>Default file extension: the default extension of the main file that is to be uploaded, eg &quot;shp&quot;, &quot;tab&quot;</li>
+			<li>Coordinate system: the id of the coordinate system in which coordinates are supplied (eg &quot;NZGD2000&quot;)</li>
+			<li>Parameters: parameters supplied to the reader.  Typically this will define which data fields contain the address, number, etc.</li>
+		</ul>
+		<h3><a name="suppliers"></a>Suppliers</h3>
+		<p>The supplier identifies the supplier of the data set.  Suppliers are defined in the <a href="sysadmin_screen">system administration dialog</a>.  The supplier identifies not just the source organisation, but also the <a href="#source_types">source type</a> and the territorial authority of the data.
+		(Note that if an authority supplies data in several formats, they must be represented by several &quot;suppliers&quot; in the address uploader.)
+
+		</p>
+	</body>
+</html>
+

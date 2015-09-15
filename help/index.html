@@ -1,0 +1,55 @@
+<html>
+	<head><title>Electoral address uploader</title></head>
+	<link rel="stylesheet" type="text/css" href="../ElectoralAddress/Gui/help/styles.css" />
+	<body>
+		<h1>Electoral address uploader</h1>
+		<p>See the <a href="../ElectoralAddress/Gui/help/overview.html">overview</a> for a description of electoral address uploading.<p>
+		<p>See the wiki <a href="http://144.66.241.88:1003/geodeticwiki/index.php?title=Electoral_Address_Uploader_FAQ">FAQ</a> for common questions and answers.</p>
+		<p>To start working on an electoral address job in QGIS you can 
+		either start a new QGIS project, open the electoral address upload 
+		management window (below), and select a new or existing job to
+		work on.  Alternatively you can open QGIS project in which you have saved an electoral address job.
+		</p>
+		<p>You do not need to save the QGIS project to save the electoral
+		address update - that is saved in the underlying database as you work on it.</p>
+		<h2>Uploader tools</h2>
+		<p>The electoral address uploader provides three tools for working with address data sets.  These can be accessed from the <span class="menu_text">Plugins | Electoral_address</span> menu item, or from the Electoral address toolbar.</p>
+		<h3>Management window</h3>
+		<img class="icon" src="../loadaddress.png" alt="Management icon" />
+		<p>This is the main tool for managing address uploads.  It is used
+		load new datasets, select data sets to edit, edit the supplied 
+		address information, define how each address will be used, and generate Landonline upload files.</p>
+		<p>There is <a href="../ElectoralAddress/Gui/help/index.html">more detailed</a> information on how to use this tool</p>
+		<p>When a new address data set is loaded the address layer is loaded into Qgis.  Also Landonline address point, street, and parcel layers are loaded. (Note that the landonline layers only display at larger scales).
+		<h3>Address info tool</h3>
+		<img class="icon" src="../addressinfo.png" alt="Address info tool icon" />
+		<p>This is a map tool used to get information from the map about addresses.  When it is selected an information window appears which displays
+		information about uploaded addresses, landonline address points, and landonline streets.  Select this tool then click or drag a rectangle on the map to get information.  The tool remains active until another map tool (eg the QGis info tool) is selected.</p>
+		
+		<h3>Address highlighter</h3>
+		<img class="icon" src="../addresshighlight.png" alt="Address info tool icon" />
+		<p>
+		When working with electoral addresses there is often a &quot;current address&quot; that is being worked on.  This tool automatically highlights that address on the map.  If the landonline street and address layers are showing, then the linked street and address are also highlighted.  
+		</p>
+		<p>The current uploaded address is highlighted with a square, the linked landonline address point (if any) with a cross, and the linked landonline street with a line.
+		<p>The highlighter button toggles this highlighting on and off</p>
+	
+		<h3>Landonline address deleting tool</h3>
+		<img class="icon" src="../deleteaddress.png" alt="Address delete tool icon" />
+		<p>
+		Use this tool to mark Landonline addresses for deletion when there is not
+		a delete record supplied with the job.  Select this tool and then click on a Landonline address to delete it.
+		This creates a new &quot;delete&quot; record linked to the landonline record.
+		</p>
+	
+		<h3>Create address geometry tool</h3>
+		<img class="icon" src="../createpoint.png" alt="Create address geometry tool icon" />
+		<p>
+        Use this tool to create or move the geometry for an address. Select this tool and then click on the map canvas to create a point geometry for the selected address. 
+        The map and address warnings will refresh and show the new address geometry. Click again to move the point. The tool remains active until another map tool is selected.
+		This creates a geometry for the address in the postgres database.
+		</p>
+	
+	</body>
+
+</html>
