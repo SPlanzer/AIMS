@@ -2,8 +2,7 @@ from ElectoralAddress.AimsApi import *
 
 
 class ResolutionData( object ):
-    '''
-      
+    ''' 
     '''
     def __init__(self, href):
         """ ... """
