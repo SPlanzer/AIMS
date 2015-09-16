@@ -5,7 +5,6 @@ from Ui_AddressLinkingWidget import Ui_AddressLinkingWidget
 
 import Controller
 
-from MergeAddressDialog import MergeAddressDialog
 from AddressList import AddressListModel
 
 class AddressLinkingWidget( Ui_AddressLinkingWidget, QWidget ):
@@ -26,7 +25,6 @@ class AddressLinkingWidget( Ui_AddressLinkingWidget, QWidget ):
         self.uShowNotes.toggled.connect( self.setShowNotes )
         self.uShowUndefined.toggled.connect( self.setShowUndefined )
         self.uSaveAddressButton.clicked.connect( self.saveAddress )
-        self.uMergeAddressButton.clicked.connect( self.mergeAddresses )
         self.setController( controller )
 
     def setController( self, controller ):
@@ -86,10 +84,4 @@ class AddressLinkingWidget( Ui_AddressLinkingWidget, QWidget ):
         if row != None and row < self._addressListModel.count()-1:
             self.uAddressListView.selectRow( row+1 )
 
-    def mergeAddresses( self ):
-        address = self.uAddressListView.selectedAddress()
-        if address and self.uAddressEditor.makeClean():
-            self.uAddressListView.selectAddress(None)
-            address = MergeAddressDialog.mergeAddresses( self, self._controller, address )
-            self.uAddressListView.selectAddress(address)
 

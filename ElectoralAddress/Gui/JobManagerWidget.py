@@ -7,7 +7,7 @@ from Ui_JobManagerWidget import Ui_JobManagerWidget
 
 from JobSelectorDialog import JobSelectorDialog
 from NewJobDialog import NewJobDialog
-from ManageUploadsDialog import ManageUploadsDialog
+
 from AdminDialog import AdminDialog
 
 from ElectoralAddress.CodeLookup import CodeLookup
@@ -100,8 +100,7 @@ class JobManagerWidget( Ui_JobManagerWidget, QWidget ):
         if job:
             self.loadJob( job )
 
-    def manageUploads( self ):
-        ManageUploadsDialog.run( self, self._controller )
+    
 
     def runAdminDialog( self ):
         AdminDialog.run(self, self._controller )

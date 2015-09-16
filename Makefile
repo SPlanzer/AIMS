@@ -1,16 +1,29 @@
 ###### EDIT ##################### 
 #Directory with ui and resource files
-RESOURCE_DIR = ElectoralAddressPlugin
+RESOURCE_DIR = /home/splanzer/.qgis2/python/plugins/ElectoralAddressPlugin
  
 #Directory for compiled resources
-COMPILED_DIR = ElectoralAddressPlugin
+COMPILED_DIR = /home/splanzer/.qgis2/python/plugins/ElectoralAddressPlugin
  
 #UI files to compile
-UI_FILES = \
+UI_FILES = Ui_InfoWidget.ui Ui_DelAddressDialog.ui \
+	ElectoralAddress/Gui/Ui_ReviewQueueWidget.ui \
+	ElectoralAddress/Gui/Ui_AddressEditorWidget.ui \
+	ElectoralAddress/Gui/Ui_AddressLinkingWidget.ui \
+	ElectoralAddress/Gui/Ui_AdminDialog.ui \
+	ElectoralAddress/Gui/Ui_ConfigureDatabase.ui \
+	ElectoralAddress/Gui/Ui_CreateUploadWidget.ui \
+	ElectoralAddress/Gui/Ui_JobEditorWidget.ui \
 	ElectoralAddress/Gui/Ui_JobManagerWidget.ui \
-	Ui_DelAddressDialog.ui
+	ElectoralAddress/Gui/Ui_JobSelectorDialog.ui \
+	ElectoralAddress/Gui/Ui_ManageSourceTypes.ui \
+	ElectoralAddress/Gui/Ui_ManageSuppliers.ui \
+	ElectoralAddress/Gui/Ui_NewJobDialog.ui \
+	ElectoralAddress/Gui/Ui_ReviewEditorWidget.ui \
+	ElectoralAddress/Gui/Ui_ReviewQueueWidget.ui
+
 #Qt resource files to compile
-RESOURCES = Resources.qrc 
+RESOURCES = Resources.qrc
  
 #pyuic4 and pyrcc4 binaries
 PYUIC = pyuic4
