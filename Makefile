@@ -1,9 +1,9 @@
 ###### EDIT ##################### 
 #Directory with ui and resource files
-RESOURCE_DIR = /home/splanzer/.qgis2/python/plugins/ElectoralAddressPlugin
+RESOURCE_DIR = /ElectoralAddressPlugin
  
 #Directory for compiled resources
-COMPILED_DIR = /home/splanzer/.qgis2/python/plugins/ElectoralAddressPlugin
+COMPILED_DIR = /ElectoralAddressPlugin
  
 #UI files to compile
 UI_FILES = Ui_InfoWidget.ui Ui_DelAddressDialog.ui \
