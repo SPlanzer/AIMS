@@ -5,6 +5,7 @@ RESOURCE_DIR = ./
 #Directory for compiled resources
 COMPILED_DIR = ./
   
+  
 #UI files to compile
 UI_FILES = Ui_InfoWidget.ui Ui_DelAddressDialog.ui \
 	ElectoralAddress/Gui/Ui_ReviewQueueWidget.ui \
