@@ -1,9 +1,9 @@
 ###### EDIT ##################### 
 #Directory with ui and resource files
-RESOURCE_DIR = /ElectoralAddressPlugin
+RESOURCE_DIR = ./
  
 #Directory for compiled resources
-COMPILED_DIR = /ElectoralAddressPlugin
+COMPILED_DIR = ./
  
 #UI files to compile
 UI_FILES = Ui_InfoWidget.ui Ui_DelAddressDialog.ui \
