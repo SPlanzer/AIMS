@@ -3,7 +3,6 @@ import json
 import Config
 from qgis.core import * #TEMP
 
-
 _url = Config.ConfigSectionMap('uri')['review']
 #_user=getpass.getuser()
 _user=Config.ConfigSectionMap('user')['name']
@@ -14,7 +13,6 @@ def set_default(obj):
     if isinstance(obj, set):
         return list(obj)
     raise TypeError
-
 
 def getResolutionPageHrefs ( page ): # now count has been added the loading of resolution items needs to be reviewed
     """ get the reference to each resolution item associated with each resolution pages"""    
@@ -32,11 +30,8 @@ def loadResolutionItem ( href ):
 def acceptResolution ( changeId, verisonId ):
     payload = {"version":{str(verisonId)},"changeId":{str(changeId)}}
     url =_url+'/{0}/accept'.format( changeId )
-
-    r = requests.post(url, data=json.dumps(payload, default=set_default), headers=_headers, auth=(_user, _password)).json()
-    
+    r = requests.post(url, data=json.dumps(payload, default=set_default), headers=_headers, auth=(_user, _password)).json() 
     QgsMessageLog.logMessage(json.dumps(r), level=QgsMessageLog.CRITICAL) #TEMP
-    
     
     try: 
         status = r.get('properties').get('workflow').get('queueStatusName')   
@@ -45,15 +40,11 @@ def acceptResolution ( changeId, verisonId ):
         message =  r.get('properties').get('reason')+': ' +r.get('properties').get('message')
         return ['message',message ]
  
-    
 def rejectResolution ( changeId, verisonId ):
     payload = {"version":{str(verisonId)},"changeId":{str(changeId)}}
     url =_url+'/{0}/decline'.format( changeId )
-
-    r = requests.post(url, data=json.dumps(payload, default=set_default), headers=_headers, auth=(_user, _password)).json()
-    
+    r = requests.post(url, data=json.dumps(payload, default=set_default), headers=_headers, auth=(_user, _password)).json()   
     QgsMessageLog.logMessage(url, level=QgsMessageLog.CRITICAL) #TEMP
-    
     
     try: 
         status = r.get('properties').get('workflow').get('queueStatusName')   
@@ -61,6 +52,3 @@ def rejectResolution ( changeId, verisonId ):
     except: 
         message =  r.get('properties').get('reason')+': ' +r.get('properties').get('message')
         return ['message',message ]
-              
-        
-  

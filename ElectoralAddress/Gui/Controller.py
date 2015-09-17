@@ -51,10 +51,9 @@ class Controller( QObject ):
         self._alist.setJob( job )
         self.jobLoading.emit("")
         self.jobLoaded.emit( job )
-        
-    
+
     def updateJob( self, job=None ):
-        if job == None:
+        if job is None:
             job = self._job
         elif type(job) == int:
             try:
@@ -76,7 +75,7 @@ class Controller( QObject ):
 
 
     def _listAddress( self, address ):
-        if type(address) == Address: 
+        if type(address) == Address:
             address = address.id()
         if type(address) == ResolutionData:
             address = address.id
@@ -91,13 +90,13 @@ class Controller( QObject ):
         if address != self._currentAddress:
             self.currentAddress = address
             self.addressSelected.emit( address )
-    
+
     def updateAddress( self, address ):
         # If the actual address object was supplied then save it.
         # Otherwise treat as notification of change, and reload
         if type(address) == Address:
             address.save()
-            # If the address is already in the list, then 
+            # If the address is already in the list, then
             # reset to that instance of Address
             listadd = self._listAddress( address )
             if listadd:
@@ -118,10 +117,9 @@ class Controller( QObject ):
 
     def updateSourceTypes( self ):
         self.sourceTypesUpdated.emit()
- 
+
  # Review Queue related
 
-    
     def loadReviewQueue( self ):
         self._rlist.setReviewItems( )
 
@@ -132,18 +130,17 @@ class Controller( QObject ):
         address = self._listAddress( address )
         if address != self._currentAddress:
             self.currentAddress = address
-            self.addressSelected.emit( address )       
+            self.addressSelected.emit( address )
     """
     def selectReview( self, address ):
         self.reviewSelected.emit( address )
-        
-    
+
     def updateReview( self, address ):
         # If the actual address object was supplied then save it.
         # Otherwise treat as notification of change, and reload
         if type(address) == ResolutionData:
-          
-            # If the address is already in the list, then 
+
+            # If the address is already in the list, then
             # reset to that instance of Address
             listadd = self._listAddress( address )
             if listadd:
@@ -157,39 +154,42 @@ class Controller( QObject ):
         if address == self._currentAddress and address.deleted():
             self.selectAddress(None)
         self._rlist.updateReview(address)
-        self.reviewUpdated.emit( address )  
-        
-
-       
+        self.reviewUpdated.emit( address )
+   
 # Use of singleton instance ...
-
-
 def instance():
     if Controller._instance == None:
         Controller._instance = Controller()
     return Controller._instance
 
+
 def loadJob( job ):
     instance().loadJob(job)
+
 
 def onJobLoaded( slot ):
     instance().jobLoaded.connect( slot )
 
+
 def updateJob( job ):
     instance().updateJob(job)
+
 
 def onJobUpdated( slot ):
     instance().jobUpdated.connect( slot )
 
+
 def selectAddress( address ):
     instance().selectAddress( address )
+
 
 def onAddressSelected( slot ):
     instance().addressSelected.connect( slot )
 
+
 def updateAddress( id ):
     instance().updateAddress(address)
 
+
 def onAddressUpdated( slot ):
     instance().addressUpdated.connect( slot )
-

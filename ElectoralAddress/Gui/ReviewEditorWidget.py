@@ -1,4 +1,4 @@
-from qgis.core import * #TEMP
+from qgis.core import * # TEMP
 import re
 
 from PyQt4.QtCore import *
@@ -13,13 +13,11 @@ from ElectoralAddress.Address import AddressStatus
 from ElectoralAddress.AimsApi import *
 import Controller
 
-
-
 class ReviewEditModel( QAbstractListModel ):
        
     def __init__(self, data = [], parent = None):
         QAbstractListModel.__init__(self, parent)
-        self._headers = ['addressNumber'  , 'addressNumberSuffix'  ,  'addressType' ,  'lifecycle', 'roadName'  , 'roadTypeName']
+        self._headers = ['addressNumber' , 'addressNumberSuffix'  ,  'addressType' ,  'lifecycle', 'roadName'  , 'roadTypeName']
         self.setList (data)
 
 
@@ -105,8 +103,7 @@ class ReviewEditorWidget( Ui_ReviewEditorWidget, QWidget ):
         return self._address
 
     def setAddressIfClean( self, address ):
-        #if not self.isDirty():
-        
+        #if not self.isDirty():   
         self.setAddress( address )
 
     def setAddress( self, address, makeClean=True ):
@@ -212,7 +209,7 @@ class ReviewEditorWidget( Ui_ReviewEditorWidget, QWidget ):
         
         #populate review edit table
         #list order is persistent
-        self._rEditList.setList( [   address.addressNumber  , address.addressNumberSuffix  , address.addressType ,  address.lifecycle , address.roadName  ,  address.roadTypeName ] ) 
+        self._rEditList.setList([ address.addressNumber,address.addressNumberSuffix,address.addressType,address.lifecycle,address.roadName,address.roadTypeName]) 
         
         #self.rWarnings.setText(address.version)
         '''
@@ -295,9 +292,7 @@ class ReviewEditorWidget( Ui_ReviewEditorWidget, QWidget ):
             self.uRange.setText('Range: ' + str(range_low) + '-' + str(range_high))
             self.uRange.setStyleSheet('')
     '''
-        
-
-        
+                
     def updateButtonClicked( self ):
         #self.uncheckButtons( self.rUpdateButton )
         self.performReviewAction()
@@ -309,9 +304,7 @@ class ReviewEditorWidget( Ui_ReviewEditorWidget, QWidget ):
     def acceptButtonClicked( self ):
         #self.uncheckButtons( self.uAcceptButton )
         self.performReviewAction()
-    
-
-    
+        
     def updateReview (self):
         ''' any properties of resolution class to be updated via here '''
         address = self._address
@@ -341,8 +334,7 @@ class ReviewEditorWidget( Ui_ReviewEditorWidget, QWidget ):
                 self._address.setMessage( _status[1] ) #keep class insync
         except:
             pass
-        self.updateReview( )
-         
+        self.updateReview( )  
          
         #if self._badgeometry:
         #    status=AddressStatus.BadGeometry

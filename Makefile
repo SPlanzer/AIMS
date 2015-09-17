@@ -1,3 +1,5 @@
+
+
 ###### EDIT ##################### 
 #Directory with ui and resource files
 RESOURCE_DIR = ./
@@ -46,6 +48,26 @@ $(COMPILED_DIR)/%.py : $(RESOURCE_DIR)/%.ui
  
 $(COMPILED_DIR)/%.py : $(RESOURCE_DIR)/%.qrc
 	-$(PYRCC) $< -o $@
- 
+
+pylint:
+	@echo
+	@echo "-----------------"
+	@echo "Pylint violations"
+	@echo "-----------------"
+	@pylint --reports=n --rcfile=pylintrc . || true
+# Run pep8 style checking
+#http://pypi.python.org/pypi/pep8
+
+pep8:
+	@echo
+	@echo "-----------"
+	@echo "PEP8 issues"
+	@echo "-----------"
+	@pep8 --repeat --ignore=E201,E202,E203,E225,E226,E231,E251,E261,E262,E121,E122,E123,E124,E125,E126,E127,E128,E501,E301,E701,E711,W291  --exclude pydev,resources.py,conf.py . || true
+
+
+
 clean : 
 	$(RM) $(COMPILED_UI) $(COMPILED_RESOURCES) $(COMPILED_UI:.py=.pyc) $(COMPILED_RESOURCES:.py=.pyc)  
+
+

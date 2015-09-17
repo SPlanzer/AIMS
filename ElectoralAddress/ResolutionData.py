@@ -18,7 +18,6 @@ class ResolutionData( object ):
     def getQueueStatusName (self): return self.queueStatusName 
     def sourceReason (self): return self.sourceReason
     def getReviewMessage (self): return self.reviewMessage
-  
     def addressId (self): return self.addressId
     def addressType (self): return  self.addressType 
     def lifecycle (self): return  self.lifecycle   
@@ -37,14 +36,11 @@ class ResolutionData( object ):
     def roadSuffix (self): return self.roadSuffix 
     def suburbLocality (self): return  self.suburbLocality
     def townCity (self): return self.townCity
-    
     def objectType (self): return self.objectType 
     def addressPositionType (self): return self.addressPositionType
     def addressPositionCoords(self): return self.addressPositionCoords
-    
-    def warning (self): return self.warnings if self.warnings else None
-    def info (self): return self.info if self.info else None
-    
+    def warning(self): return self.warnings if self.warnings else None
+    def info(self): return self.info if self.info else None  
     def displayNum (self):
         if self.addressNumberPrefix:  
             num = [self.addressNumberPrefix+'/', str(self.addressNumber),  +  self.addressNumberSuffix]
