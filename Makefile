@@ -63,8 +63,7 @@ pep8:
 	@echo "-----------"
 	@echo "PEP8 issues"
 	@echo "-----------"
-	@pep8 --repeat --ignore=E201,E202,E203,E225,E226,E231,E251,E261,E262,E121,E122,E123,E124,E125,E126,E127,E128,E501,E301,E701,E711,W291  --exclude pydev,resources.py,conf.py . || true
-
+	@pep8 --repeat --ignore=E101,E201,E202,E203,E211,E225,E227,E226,E228,E231,E251,E261,E262,E293,W293,E121,E122,E123,E124,E125,E126,E127,E128,E501,E301,E302,E701,E702,E711,W291  --exclude pydev,resources.py,conf.py . || true
 
 
 clean : 

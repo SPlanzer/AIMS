@@ -17,6 +17,3 @@ def ConfigSectionMap(section):
         except:
             dict1[option] = None
     return dict1
-
-
-

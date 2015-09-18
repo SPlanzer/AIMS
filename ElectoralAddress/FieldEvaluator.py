@@ -25,7 +25,7 @@ class FieldEvaluator( object ):
 
     def loadDefinition(self,definition):
         self._func = lambda x: ''
-        self._nfunc = 0;
+        self._nfunc = 0
         self._funcs = dict()
 
         spacefunc = self._stringfunc(' ')
@@ -42,7 +42,7 @@ class FieldEvaluator( object ):
             r"\b(\w+)\/(\w+)\b",
             lambda m: "lookup("+self._stringfunc(m.group(2))+" "+m.group(1)+" "+m.group(1)+")",
             definition)
-        
+
         # Sort out function definitions
         while( True ):
             definition, count = self._refunc.subn(
@@ -68,10 +68,10 @@ class FieldEvaluator( object ):
             k = [self.unicode2ascii(entry) for entry in k] if isinstance(k,tuple) else self.unicode2ascii(k)
             self._variables[k] = varfunc(k)
         return self._func()
-    
+
     def unicode2ascii(self,uni):
         return unicodedata.normalize('NFKD',uni).encode('ascii','ignore')
-    
+
     # Define a mapping function to be used by a subclass
 
     def setMappingFunc( self, mapfunc ):

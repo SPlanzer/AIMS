@@ -75,23 +75,22 @@ class ReaderType( object ):
         prmstr = delim + delim.join((p['name']+delim+p['value'] for p in params))
         return prmstr
 
-
     @classmethod
     def decodeParams( cls, prmstr ):
-       params = []
-       if prmstr:
+        params = []
+        if prmstr:
             prms = prmstr[1:].split(prmstr[0])
             for i in range(0,len(prms)-1,2):
                 params.append(dict(name=prms[i],value=prms[i+1]))
-       return params
+        return params
 
     def __init__(self,id,name,fileext,srsid,type,prmstr):
-       self._id = id
-       self._name = name
-       self._fileext = fileext
-       self._srsid = srsid
-       self._type = type
-       self._params = ReaderType.decodeParams( prmstr )
+        self._id = id
+        self._name = name
+        self._fileext = fileext
+        self._srsid = srsid
+        self._type = type
+        self._params = ReaderType.decodeParams( prmstr )
 
     def id(self): return self._id
     def name(self): return self._name

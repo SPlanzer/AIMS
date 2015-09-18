@@ -90,4 +90,3 @@ class AddressHighlighter( QObject ):
             geom = QgsGeometry.fromWkt(wkt)
             self._rclMarker.setToGeometry(geom,rclLayer)
             self._rclMarker.show()
-            

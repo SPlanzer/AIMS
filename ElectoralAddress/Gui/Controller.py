@@ -73,7 +73,6 @@ class Controller( QObject ):
         # so just emit the signal
         self.uploadUpdated.emit( upload )
 
-
     def _listAddress( self, address ):
         if type(address) == Address:
             address = address.id()

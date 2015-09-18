@@ -95,5 +95,3 @@ class DelAddressDialog( Ui_DelAddressDialog, QDialog ):
         if self.exec_() == QDialog.Accepted:
             return self.uSadListView.selectedItem()
         return None
-
-

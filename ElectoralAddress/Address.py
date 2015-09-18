@@ -259,7 +259,7 @@ class Address(object):
             apts.append( dict(
                 sad_id = r[0],
                 display = SortableAddress( r[1], r[2] ),
-                sameparcel = 'Yes' if r[3] else  'No',
+                sameparcel = 'Yes' if r[3] else 'No',
                 distance = "%.2f" % (r[4],),
                 linked = 'Yes' if r[0] == self._sad_id else ''
             ))

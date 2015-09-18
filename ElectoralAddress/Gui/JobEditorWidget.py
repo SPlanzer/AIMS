@@ -44,7 +44,7 @@ class JobEditorWidget( Ui_JobEditorWidget, QWidget ):
         if job != self.job():
             return
         if job:
-            createdate = job.creation_time().strftime('%d-%b-%Y');
+            createdate = job.creation_time().strftime('%d-%b-%Y')
             createdate += ' by ' + job.created_by()
             self.uCreationLabel.setText(createdate)
             self.uSupplierLabel.setText(job.supplier().name())
@@ -80,4 +80,3 @@ class JobEditorWidget( Ui_JobEditorWidget, QWidget ):
         job.setCompleted()
         job.addNote('Job completed')
         self._controller.updateJob(job)
-

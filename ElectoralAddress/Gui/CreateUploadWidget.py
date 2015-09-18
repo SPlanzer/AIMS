@@ -79,4 +79,3 @@ class CreateUploadWidget( QWidget, Ui_CreateUploadWidget ):
         QMessageBox.information(self,"Address upload created","SQL for the upload has been written to\n"+filename)
         self._controller.updateUpload( upload )
         self.load()
-

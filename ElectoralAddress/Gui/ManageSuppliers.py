@@ -156,7 +156,6 @@ class ManageSuppliers( QWidget, Ui_ManageSuppliers ):
         self.uListView.selectId( id )
         return True
 
-
     @attempt
     def deleteItem( self, item ):
         if not self._editItem:
@@ -183,4 +182,4 @@ class ManageSuppliers( QWidget, Ui_ManageSuppliers ):
         return (
             str(self.uName.text()) != '' and 
             self.uSourceType.selectedValue() != None and
-            self.uTA.selectedValue() != None );
+            self.uTA.selectedValue() != None )

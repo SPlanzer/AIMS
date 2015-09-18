@@ -78,4 +78,3 @@ class InfoWidget( Ui_InfoWidget, QWidget ):
                     offset=round(float(r[3]),1)
                     ))
         self.uRnaListView.setList(self._foundRna )
-

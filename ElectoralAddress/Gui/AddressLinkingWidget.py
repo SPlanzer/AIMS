@@ -35,7 +35,6 @@ class AddressLinkingWidget( Ui_AddressLinkingWidget, QWidget ):
         self.uAddressEditor.setController( controller )
         self._controller = controller
 
-
     def addAddressAction( self, name, action, whatsthis='' ):
         button = QPushButton(self)
         button.setText(name)
@@ -83,5 +82,3 @@ class AddressLinkingWidget( Ui_AddressLinkingWidget, QWidget ):
         row = self.uAddressListView.selectedRow()
         if row != None and row < self._addressListModel.count()-1:
             self.uAddressListView.selectRow( row+1 )
-
-

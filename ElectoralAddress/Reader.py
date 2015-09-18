@@ -36,7 +36,7 @@ class AddressData( object ):
         name = name.strip().upper()
         name = re.sub(r"\s+"," ",name)
         return name
-        
+
     def standardiseNumber( self, number ):
         number = number or ''
         number = number.strip().upper()
@@ -52,7 +52,7 @@ class AddressData( object ):
             raise Error("Invalid geometry "+location)
         else:
             return "POINT("+point.group(1)+" "+point.group(2)+")"
-    
+
     def __str__( self ):
         return self._number + ' ' + self._roadname
 
@@ -245,8 +245,8 @@ class CsvReader ( Reader ):
         self._iddefn = None
         self._commentdefn = None
         self._parcelIDdefn = None
-        self._appellationdefn = None    
-        self._landdistrictdefn = None    
+        self._appellationdefn = None
+        self._landdistrictdefn = None
         self._xdefn = None
         self._ydefn = None
         self._nextid = 0
@@ -267,7 +267,7 @@ class CsvReader ( Reader ):
             raise Error("Cannot open CSV source: " + self._filename)
         self._roaddefn = self.loadDefinition( "roadname")
         self._numberdefn = self.loadDefinition( "number")
-        
+
         xdefn = self.param("east","") 
         if xdefn:
             self._xdefn = self.loadDefinition("east")
@@ -279,7 +279,7 @@ class CsvReader ( Reader ):
             self._ydefn = self.loadDefinition("north")
         else:
             self._ydefn = lambda x: ''
-        
+
         iddefn = self.param("id","")
         if iddefn:
             self._iddefn = self.loadDefinition( "id")
@@ -297,13 +297,13 @@ class CsvReader ( Reader ):
             self._commentdefn = self.loadDefinition( "comment")
         else:
             self._commentdefn = lambda x: ''
-        
+
         parcelIDdefn = self.param("parcelID","")
         if parcelIDdefn:
             self._parcelIDdefn = self.loadDefinition("parcelID")
         else:
             self._parcelIDdefn = lambda x: ''
-        
+
         appellationdefn = self.param("appellation","")
         if appellationdefn:
             self._appellationdefn = self.loadDefinition("appellation")
@@ -363,7 +363,7 @@ class CsvReader ( Reader ):
                 pid = Database.executeScalar('elc_findparcelid', appellation.strip(), int(landdistrict.strip()))
             else:
                 pid = Database.executeScalar('elc_findparcelid', appellation.strip(), None)
-	    if pid is not None:
+        if pid is not None:
                 point = str(Database.executeScalar('elc_findparcelpoint', pid))
                 transform = False
         # Otherwise leave empty 
@@ -388,12 +388,8 @@ if __name__=="__main__":
         prmstr = sys.argv[3]
         prms = prmstr[1:].split(prmstr[0])
         for i in range(0,len(prms)-1,2):
-             params[prms[i]] = prms[i+1]
+            params[prms[i]] = prms[i+1]
     reader = Reader.new(rtype,**params)
     reader.load(dfile)
     for address in reader.addresses():
         print address,' location: ',address.location()
-
-    
-
-

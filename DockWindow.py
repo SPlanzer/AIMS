@@ -62,4 +62,3 @@ class DockWindow( QDockWidget ):
                 self.setPos(int(parts[2]),int(parts[3]))
         except:
             pass
-

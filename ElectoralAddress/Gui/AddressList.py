@@ -84,7 +84,6 @@ class AddressList(QObject):
             self._addAddress(adr)
         self.listChanged.emit()
 
-
     def job(self): return self._job
 
     def list(self):
@@ -154,7 +153,6 @@ class ReviewList( QObject ):
 
     itemChanged = pyqtSignal(int,name="itemChanged")
     listChanged = pyqtSignal(name="listChanged")
-
     shortNoteLen = 20
 
     def __init__( self ):
@@ -162,8 +160,6 @@ class ReviewList( QObject ):
         self._list = []
         self._lookup = None
 
-    
-        
     # Management functions - don't emit signals
     def _rCreateItem( self, reviewItem ):
 
@@ -200,8 +196,8 @@ class ReviewList( QObject ):
             addressPositionCoords =reviewItem.addressPositionCoords,            
             displayNum = reviewItem.displayNum(),
             displayRoad = reviewItem.displayRoad()                   
-            )        
-                    
+            )
+
     def _lookupId(self, id):
         if not self._lookup:
             self._lookup = dict((i[1]['id'], i[0]) for i in enumerate(self._list))
@@ -225,7 +221,6 @@ class ReviewList( QObject ):
         for adr in job.addresses():
             self._addAddress(adr)
         self.listChanged.emit()
-
 
     def job(self): return self._job
 
@@ -257,7 +252,6 @@ class ReviewList( QObject ):
             if adr:
                 result.append(adr)
         return result 
-            
 
     def _addReviewItem( self, reviewItem ):
         self._lookup = None
@@ -268,7 +262,6 @@ class ReviewList( QObject ):
             self._lookup = dict((i[1]['id'],i[0]) for i in enumerate(self._list))
         return self._lookup.get(id)
 
-   
     def clear( self ):
         self._list[:] = []
         self._lookup = None
@@ -283,7 +276,7 @@ class ReviewList( QObject ):
             reviewItem = ResolutionData( href )
             self._addReviewItem( reviewItem )
         self.listChanged.emit()
-    
+
     def updateReview(self, adr):
         if adr == None:
             return
@@ -300,14 +293,11 @@ class ReviewList( QObject ):
         elif not adr.deleted():
             self.addNewAddress(adr) 
 
-
-
-    
     #def job( self ): return self._job
-    
+
     def list(self):
         return self._list
-    
+
     def addresses( self, filter = None ):
         return [i['address'] for i in self._list if filter==None or filter(i['address'])]
 
@@ -323,7 +313,7 @@ class ReviewList( QObject ):
         return None
 
     def addressFromId( self, id ):
-        i =  self._lookupId(id)
+        i = self._lookupId(id)
         return self._list[i]['address'] if i != None else None
 
     def addressesFromIds( self, idlist ):
@@ -333,8 +323,6 @@ class ReviewList( QObject ):
             if adr:
                 result.append(adr)
         return result
-
-
 
 ##################################################################
 
@@ -375,7 +363,7 @@ class AddressListModel(DictionaryListModel):
                 f = lambda x: x['notmerged']
         DictionaryListModel.setFilter(self, f)
         '''
-       
+
     @pyqtSlot()
     def resetAddressList(self):
         if self._alist: 
@@ -424,7 +412,7 @@ class AddressListView(DictionaryListView):
 
     addressSelected = pyqtSignal(Address, name="addressSelected")
     reviewSelected = pyqtSignal(ResolutionData, name="reviewSelected") 
-    
+
     def __init__(self, parent=None):
         DictionaryListView.__init__(self, parent)
         self.rowSelected.connect(self.onRowSelected)
@@ -435,8 +423,7 @@ class AddressListView(DictionaryListView):
             self.addressSelected.emit(address)
         elif isinstance(ResolutionData, Address):
             self.reviewSelected.emit(address)
-            
-    
+
     def selectedAddress(self):
         if isinstance(self.model(), AddressListModel):
             item = self.selectedItem()
@@ -454,7 +441,7 @@ class AddressListView(DictionaryListView):
                 return item['address']
         return None
     '''
- 
+
     def selectAddress(self, address):
         model = self.model()
         if isinstance(model, AddressListModel):

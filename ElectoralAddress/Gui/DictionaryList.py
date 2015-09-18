@@ -126,8 +126,8 @@ class DictionaryListView( QTableView ):
 
     def selectedItems( self ):
         if self._dictionaryList:
-           list = self._dictionaryList
-           return [list.getItem(r) for r in self.selectedRows()]
+            list = self._dictionaryList
+            return [list.getItem(r) for r in self.selectedRows()]
         return []
 
     def rowCount( self ):
@@ -346,5 +346,3 @@ class DictionaryListModel( QAbstractTableModel ):
         elif showing:
             self.dataChanged.emit(self.index(row,0),self.index(row,len(self._columns)))
         self.itemUpdated.emit( index )
-   
-

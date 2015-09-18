@@ -20,8 +20,7 @@ def getResolutionPageHrefs ( page ): # now count has been added the loading of r
     r = requests.get(pageUrl,auth=(_user, _password)).json()
     for i in r['entities']:
         yield i['links'][0]['href']
-        
-       
+
 def loadResolutionItem ( href ):
     """ load each resolution item as per its href url"""    
     r = requests.get(href,auth=(_user, _password)).json()
@@ -32,14 +31,14 @@ def acceptResolution ( changeId, verisonId ):
     url =_url+'/{0}/accept'.format( changeId )
     r = requests.post(url, data=json.dumps(payload, default=set_default), headers=_headers, auth=(_user, _password)).json() 
     QgsMessageLog.logMessage(json.dumps(r), level=QgsMessageLog.CRITICAL) #TEMP
-    
+
     try: 
         status = r.get('properties').get('workflow').get('queueStatusName')   
-        return ['status',status ]            
+        return ['status',status ]
     except: 
-        message =  r.get('properties').get('reason')+': ' +r.get('properties').get('message')
+        message = r.get('properties').get('reason')+': ' +r.get('properties').get('message')
         return ['message',message ]
- 
+
 def rejectResolution ( changeId, verisonId ):
     payload = {"version":{str(verisonId)},"changeId":{str(changeId)}}
     url =_url+'/{0}/decline'.format( changeId )
@@ -50,5 +49,5 @@ def rejectResolution ( changeId, verisonId ):
         status = r.get('properties').get('workflow').get('queueStatusName')   
         return ['status',status ]            
     except: 
-        message =  r.get('properties').get('reason')+': ' +r.get('properties').get('message')
+        message = r.get('properties').get('reason')+': ' +r.get('properties').get('message')
         return ['message',message ]

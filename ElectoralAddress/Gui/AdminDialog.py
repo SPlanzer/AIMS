@@ -19,4 +19,3 @@ class AdminDialog( QDialog, Ui_AdminDialog ):
     def setController( self, controller ):
         self.uSuppliersTab.setController( controller )
         self.uSourceTypesTab.setController( controller )
-

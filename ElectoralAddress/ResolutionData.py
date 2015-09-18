@@ -11,30 +11,30 @@ class ResolutionData( object ):
     
     #possibly no longer require the majority of the below functions
     def version(self): return str(self.version)
-    def id(self): return  str(self.id) 
-    def changeTypeName(self): return  self.changeTypeName
+    def id(self): return str(self.id) 
+    def changeTypeName(self): return self.changeTypeName
     def submitterUserName (self): return self.submitterUserName 
     def submittedDate (self): return self.submittedDate 
     def getQueueStatusName (self): return self.queueStatusName 
     def sourceReason (self): return self.sourceReason
     def getReviewMessage (self): return self.reviewMessage
     def addressId (self): return self.addressId
-    def addressType (self): return  self.addressType 
-    def lifecycle (self): return  self.lifecycle   
+    def addressType (self): return self.addressType 
+    def lifecycle (self): return self.lifecycle   
     def unitType (self): return self.unitType                           
     def unitValue (self): return self.unitValue
     def levelType (self): return self.levelType                                               
     def levelValue (self): return self.levelValue
     def addressNumberPrefix (self): return self.addressNumberPrefix
-    def addressNumber (self): return  self.addressNumber 
-    def addressNumberSuffix (self): return  self.addressNumberSuffix   
+    def addressNumber (self): return self.addressNumber 
+    def addressNumberSuffix (self): return self.addressNumberSuffix   
     def addressNumberHigh (self): return self.addressNumberHigh
     def roadCentrelineId (self): return self.roadCentrelineId
     def roadPrefix (self): return self.roadPrefix
-    def roadName (self): return  self.roadName
-    def roadTypeName (self): return  self.roadTypeName
+    def roadName (self): return self.roadName
+    def roadTypeName (self): return self.roadTypeName
     def roadSuffix (self): return self.roadSuffix 
-    def suburbLocality (self): return  self.suburbLocality
+    def suburbLocality (self): return self.suburbLocality
     def townCity (self): return self.townCity
     def objectType (self): return self.objectType 
     def addressPositionType (self): return self.addressPositionType
@@ -42,27 +42,25 @@ class ResolutionData( object ):
     def warning(self): return self.warnings if self.warnings else None
     def info(self): return self.info if self.info else None  
     def displayNum (self):
-        if self.addressNumberPrefix:  
-            num = [self.addressNumberPrefix+'/', str(self.addressNumber),  +  self.addressNumberSuffix]
+        if self.addressNumberPrefix:
+            num = [self.addressNumberPrefix+'/', str(self.addressNumber), + self.addressNumberSuffix]
         else: 
             num = [str(self.addressNumber), self.addressNumberSuffix]
         return ''.join(filter(None, num)) 
-   
+
     def displayRoad (self):
         road = [self.roadPrefix, self.roadName, self.roadTypeName, self.roadSuffix ]  
         return ' '.join(filter(None, road)) 
-    
+
     def setStatus( self, status ): 
         self.queueStatusName = status 
-    
+
     def setMessage( self, status ): 
         self.reviewMessage = status 
-        
-        
-      
+
     def load( self ):
         r = loadResolutionItem( self.href )
-           
+
         #Properties
         self.version = str(r.get('properties').get('version'))
         self.id = r.get('properties').get('changeId')
@@ -97,7 +95,7 @@ class ResolutionData( object ):
         self.objectType = r.get('properties').get('addressedObject').get('objectType') #chainning used as this will return None if Key does not exists
         try:
             self.addressPositionType = r.get('properties').get('addressedObject').get('addressPosition').get('type')
-        except:  self.addressPositionType = 'NONE'
+        except: self.addressPositionType = 'NONE'
         try:
             self.addressPositionCoords = r.get('properties').get('addressedObject').get('addressPosition').get('coordinates')
         except: self.addressPositionCoords ='NONE'
@@ -114,12 +112,6 @@ class ResolutionData( object ):
         self.info = '\n'.join( info )+'\n'
         self.warnings = '\n'.join( warnings ) 
                 
-   
-        
-
-      
-
-    
     """
 
     def save( self ):

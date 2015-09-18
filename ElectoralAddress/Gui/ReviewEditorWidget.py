@@ -17,9 +17,8 @@ class ReviewEditModel( QAbstractListModel ):
        
     def __init__(self, data = [], parent = None):
         QAbstractListModel.__init__(self, parent)
-        self._headers = ['addressNumber' , 'addressNumberSuffix'  ,  'addressType' ,  'lifecycle', 'roadName'  , 'roadTypeName']
+        self._headers = ['addressNumber' , 'addressNumberSuffix' , 'addressType' , 'lifecycle', 'roadName' , 'roadTypeName']
         self.setList (data)
-
 
     def setList( self, list ):
         #self.resettingModel.emit()
@@ -35,10 +34,8 @@ class ReviewEditModel( QAbstractListModel ):
             else:
                 return self._headers[section]
 
-
     def rowCount(self, parent):
         return len(self._list)
-
 
     def data(self, index, role):
         if role == Qt.EditRole:
@@ -51,7 +48,6 @@ class ReviewEditModel( QAbstractListModel ):
     def getData(self):
         
         QgsMessageLog.logMessage(', '.join(map(str, self._list)), level=QgsMessageLog.CRITICAL) #TEMP
-
 
     def flags(self, index):
         return Qt.ItemIsEditable | Qt.ItemIsEnabled | Qt.ItemIsSelectable
@@ -68,7 +64,6 @@ class ReviewEditModel( QAbstractListModel ):
             return True
         #return False
 
-
 class ReviewEditorWidget( Ui_ReviewEditorWidget, QWidget ):
 
     def __init__( self, parent=None, controller=None ):
@@ -83,15 +78,12 @@ class ReviewEditorWidget( Ui_ReviewEditorWidget, QWidget ):
         self.rUpdateButton.clicked.connect( self.updateButtonClicked )
         self.uRejectButton.clicked.connect( self.rejectButtonClicked )
         self.uAcceptButton.clicked.connect( self.acceptButtonClicked )
-
-        
-
         #self.uHouseNumber.textChanged.connect( self.houseNumberChanged )
         '''
         self.load()
         self.setController( controller )
         '''
-    
+
     def setController( self, controller ):
         if not controller:
             controller = Controller.instance()
@@ -161,7 +153,6 @@ class ReviewEditorWidget( Ui_ReviewEditorWidget, QWidget ):
             self._controller.updateAddress(address)
 
     def load(self,reload=False):
-        
 
         address = self._address
         self.uAcceptButton.setEnabled(True) #rename button to r...
@@ -299,7 +290,7 @@ class ReviewEditorWidget( Ui_ReviewEditorWidget, QWidget ):
 
     def rejectButtonClicked( self ):
         #self.uncheckButtons( self.uRejectButton )
-         self.performReviewAction()
+        self.performReviewAction()
 
     def acceptButtonClicked( self ):
         #self.uncheckButtons( self.uAcceptButton )
@@ -318,15 +309,15 @@ class ReviewEditorWidget( Ui_ReviewEditorWidget, QWidget ):
         # tests? 
 
         if self.uAcceptButton.isChecked():
-            _status =  acceptResolution( self._address.id, self._address.version )    
-               
+            _status = acceptResolution( self._address.id, self._address.version )
+
         elif self.uRejectButton.isChecked():
-            _status =  rejectResolution( self._address.id, self._address.version )    
+            _status = rejectResolution( self._address.id, self._address.version )
         
         elif self.rUpdateButton.isChecked():
             self.modelDict = None
             self._rEditList.getData()#TEMP
-      
+
         try:
             if _status[0] == 'status':
                 self._address.setStatus( _status[1] ) #keep class insync
@@ -334,7 +325,7 @@ class ReviewEditorWidget( Ui_ReviewEditorWidget, QWidget ):
                 self._address.setMessage( _status[1] ) #keep class insync
         except:
             pass
-        self.updateReview( )  
+        self.updateReview( )
          
         #if self._badgeometry:
         #    status=AddressStatus.BadGeometry

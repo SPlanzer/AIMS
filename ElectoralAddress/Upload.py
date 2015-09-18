@@ -9,7 +9,7 @@ import Database
 
 
 class Upload( object ):
-    
+
     @classmethod
     def CreateUpload( cls, filename=None ):
         if not filename:
@@ -41,7 +41,6 @@ class Upload( object ):
         self._filename = r[2]
         self._n_insert = r[3]
         self._n_delete = r[4]
-
 
     @classmethod
     def defaultNewFilename( cls, upload_date=None ):
@@ -82,9 +81,7 @@ class Upload( object ):
                       (self._creation_time.strftime('%d %B %Y at %H:%M'),))
         sqlfile.write("\n")
 
-
         # Insertions
-      
         sqlfile.write("\n")
         nins = 0
         for r in Database.execute('SELECT housenumber, range_low, range_high, status, rcl_id, rna_id, wkt, sufi from elc_UploadNewAddresses(%s)',self._id):
@@ -96,11 +93,10 @@ class Upload( object ):
             if r[3] == 'NEWA': sufi = 'null'
             else: sufi = r[7] 
             unofficial_flag = "N"
-            
 
             sqlfile.write('''
        INSERT INTO crs_street_address_stage(house_number, range_low, range_high, status, unofficial_flag, rcl_id, rna_id, shape, sufi) VALUES
-          ('%s',%s,%s,'%s','%s',%d,%d,'%s', %s);'''    % (r[0],r[1], range_high,status,unofficial_flag,r[4],r[5],wkt, sufi))
+          ('%s',%s,%s,'%s','%s',%d,%d,'%s', %s);''' % (r[0],r[1], range_high,status,unofficial_flag,r[4],r[5],wkt, sufi))
             nins += 1
         sqlfile.write("\n")
 
@@ -108,8 +104,6 @@ class Upload( object ):
         sqlfile.write("       EXECUTE PROCEDURE cp_cel_AddressStageUpdate();\n")
         sqlfile.write("\n")
         sqlfile.close()
-
-        
 
         txtfile.write('''
 FTP the attached "%s" file to the production database server (crsprd1).

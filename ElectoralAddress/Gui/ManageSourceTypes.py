@@ -164,7 +164,6 @@ class ManageSourceTypes( QWidget, Ui_ManageSourceTypes ):
             p['startvalue'] = ''
             self._params.updateItem(i)
 
-
     def clearItem( self ):
         self._editItem = None
         self.uName.setText('')
@@ -217,7 +216,6 @@ class ManageSourceTypes( QWidget, Ui_ManageSourceTypes ):
         self.uListView.selectId( id )
         return True
 
-
     @attempt
     def deleteItem( self, item ):
         if not self._editItem:
@@ -264,4 +262,3 @@ class ManageSourceTypes( QWidget, Ui_ManageSourceTypes ):
             self.uCoordSys.selectedValue() != None and
             self.paramsValid()
             )
-

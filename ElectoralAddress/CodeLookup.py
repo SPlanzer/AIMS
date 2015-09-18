@@ -1,5 +1,6 @@
 
-import Database;
+import Database
+
 
 class CodeLookup( object ):
 
@@ -44,5 +45,3 @@ class CodeLookup( object ):
         if type in cls._mapping and key in cls._mapping[type]:
             return cls._mapping[type][key]
         return dflt
-
-

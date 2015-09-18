@@ -97,5 +97,3 @@ class JobSelectorDialog( Ui_JobSelectorDialog, QDialog ):
         except:
             msg = str(sys.exc_info()[1])
             QMessageBox.warning(self,"Error loading job",msg)
-
-

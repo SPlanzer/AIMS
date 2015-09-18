@@ -4,6 +4,7 @@ import getpass
 import Error
 import Config
 
+
 _db = None
 _autocommit = True
 _restartRequired = False
@@ -16,28 +17,20 @@ _user=Config.ConfigSectionMap('db')['user']
 _password=''
 _addressSchema=Config.ConfigSectionMap('db')['addressschema']
 _bdeSchema=Config.ConfigSectionMap('db')['bdeschema']
-
 def host(): return _host
 def setHost(host): global _host; _host=host; _reset()
-
 def port(): return _port
 def setPort(port): global _port; _port=port; _reset()
-
 def database(): return _name
 def setDatabase(name): global _name; _name=name; _reset()
-
 def user(): return _user
 def setUser(user): global _user; _user=user; _reset()
-
 def password(): return _password
 def setPassword(password): global _password; _password=password; _reset()
-
 def addressSchema(): return _addressSchema
 def setAddressSchema(addressSchema): global _addressSchema; _addressSchema=addressSchema; _reset()
-
 def bdeSchema(): return _bdeSchema
 def setBdeSchema(bdeSchema): global _bdeSchema; _bdeSchema=bdeSchema; _reset()
-
 def _reset():
     global _db
     global _restartRequired
@@ -115,4 +108,3 @@ def rollback( ):
     if _db:
         _db.rollback()
         _autocommit = True
-

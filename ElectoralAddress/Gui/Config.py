@@ -48,6 +48,3 @@ def setDatabaseConfiguration( host=None, port=None, database=None, user=None, pa
     set('Database/addressSchema',addressSchema)
     set('Database/bdeSchema',bdeSchema)
     configureDatabase(dbmodule)
-
-
-

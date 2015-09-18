@@ -71,7 +71,7 @@ class CreatePointTool( QgsMapTool ):
         # Add the point to the database
         success = Database.execute('elc_CreateAddressPoint', self._address.id(), str(wkt))
 
-    if success:
+        if success:
         # Refresh GUI
-        self._iface.mapCanvas().refresh()
-        self._controller.updateAddress( self._address.id() )
+            self._iface.mapCanvas().refresh()
+            self._controller.updateAddress( self._address.id() )

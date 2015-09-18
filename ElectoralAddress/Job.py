@@ -7,11 +7,13 @@ from Address import Address
 from Supplier import Supplier
 from ReaderType import ReaderType
 
+
 class JobStatus:
     New = 'N'
     Working = 'P'
     Complete = 'C'
     Uploaded = 'U'
+
 
 class Job( object ):
 
@@ -149,12 +151,12 @@ class Job( object ):
             if self._status != JobStatus.New:
                 self.setStatus( JobStatus.New )
                 self.save(True)
-    
+
             reader = self._getReader()
             reader.load( filename )
             for ad in reader.addresses():
                 Address.createAddress( self, ad, ad.transform() )
-    
+
             # Identify clusters of co-located addresses
             Database.execute('elc_createAddressClusters', self._id )
             # Link to roads, address points, TAs
@@ -172,12 +174,11 @@ class Job( object ):
     def createAddressFromLandonlineAddress( self, sad_id, status ):
         adr_id = Address.createFromLandonlineAddress( self, sad_id, status )
         return Address( self, adr_id )
-    
-    
+
     def createNewAddress (self, job_id, wkt):
         adr_id = Database.executeScalar('elc_CreateAddress', job_id, '', '', '', '', '', wkt, 0)
         return Address( self, adr_id )
-        
+
     def addresses(self):
         for r in Database.execute('select adr_id from elc_GetJobAddressIds(%s)',self._id ):
             yield Address(self,r[0])

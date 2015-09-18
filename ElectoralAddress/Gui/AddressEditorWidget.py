@@ -276,7 +276,6 @@ class AddressEditorWidget( Ui_AddressEditorWidget, QWidget ):
             style = self.warningStyle
         self.uWarnings.setStyleSheet(style)
 
-
     def selectReplacement( self ):
         row = self.uReplacementAddresses.selectedItem()
         if row and not self._badroad:
@@ -358,4 +357,3 @@ class AddressEditorWidget( Ui_AddressEditorWidget, QWidget ):
             range_high=None
             range_low=None
         return range_low, range_high
-    

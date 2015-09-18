@@ -9,38 +9,27 @@ from AddressList import AddressListModel
 
 class ReviewQueueWidget( Ui_ReviewQueueWidget, QWidget ):
 
-
-
     def __init__( self, parent=None, controller=None ):
-        
         QWidget.__init__( self, parent )
         self.setupUi(self)
         self._addressListModel = AddressListModel()
         self._addressListModel.setColumns(
-          ['id','version', 'displayNum', 'displayRoad', 'submittedDate', 'changeTypeName', 'addressType', 'suburbLocality', 'lifecycle', 'townCity', 'objectType', 'addressPositionType',  'queueStatusName',  'submitterUserName'],
-          ['changeId','version', 'Number', 'Road','submittedDate', 'changeType',  'addressType',  'suburb', 'lifecycle', 'townCity', 'objectType', 'addressPositionType',  'queueStatus',  'submitter' ]
+          ['id','version', 'displayNum', 'displayRoad', 'submittedDate', 'changeTypeName', 'addressType', 'suburbLocality', 'lifecycle', 'townCity', 'objectType', 'addressPositionType', 'queueStatusName', 'submitterUserName'],
+          ['changeId','version', 'Number', 'Road','submittedDate', 'changeType', 'addressType', 'suburb', 'lifecycle', 'townCity', 'objectType', 'addressPositionType', 'queueStatus', 'submitter' ]
          )
         #Need to add address add above to support "replaces"  
         
-        
         self.uReviewListView.setModel( self._addressListModel )
         self.uReviewListView.rowSelectionChanged.connect( self.selectAddress )
-        
         #self.uShowAll.toggled.connect( self.setShowAll )
         #self.uShowWarnings.toggled.connect( self.setShowWarnings )
         #self.uShowNotes.toggled.connect( self.setShowNotes )
         #self.uShowUndefined.toggled.connect( self.setShowUndefined )
         #self.uSaveAddressButton.clicked.connect( self.saveAddress )
         #self.uMergeAddressButton.clicked.connect( self.mergeAddresses )
-
-
         self.setController( controller )
         self._controller.loadReviewQueue()
 
-    
-
-    
-      
     def setController( self, controller ):
         if not controller:
             controller = Controller.instance()

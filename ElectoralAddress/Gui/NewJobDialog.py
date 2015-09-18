@@ -13,7 +13,6 @@ from Utility import attempt
 import Config
 
 class NewJobDialog( Ui_NewJobDialog, QDialog ):
-    
 
     @classmethod
     def getJob( cls, parent=None ):
@@ -84,5 +83,3 @@ class NewJobDialog( Ui_NewJobDialog, QDialog ):
         finally:
             self.uStatusLabel.setText("")
             self.setCursor(Qt.ArrowCursor)
-
-

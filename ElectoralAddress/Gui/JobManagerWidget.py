@@ -55,7 +55,6 @@ class JobManagerWidget( Ui_JobManagerWidget, QWidget ):
         self.uJobSummaryTab.setController(self._controller)
         self.uAddressesTab.setController(self._controller)
         
-
     def defaultHelpFile( self ):
         from os.path import dirname, abspath, join
         return join(dirname(abspath(__file__)),'help','index.html')
@@ -89,7 +88,6 @@ class JobManagerWidget( Ui_JobManagerWidget, QWidget ):
         self.uAddressesTab.addAddressAction( name, action, whatsthis )
     # Job details tab:
 
-
     def newJob( self ):
         job = NewJobDialog.getJob(self)
         if job:
@@ -99,8 +97,6 @@ class JobManagerWidget( Ui_JobManagerWidget, QWidget ):
         job = JobSelectorDialog.getJob()
         if job:
             self.loadJob( job )
-
-    
 
     def runAdminDialog( self ):
         AdminDialog.run(self, self._controller )

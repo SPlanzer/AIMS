@@ -143,7 +143,6 @@ class LayerManager( QObject ):
                 jobid = int(match.group(1))
         return jobid
 
-
     def installAddressLayer( self, job, where='' ):
         if not job and not self._adrLayer:
             return
@@ -180,4 +179,3 @@ class LayerManager( QObject ):
             return True
         scale = self._iface.mapCanvas().mapRenderer().scale()
         return scale <= layer.maximumScale() and scale >= layer.minimumScale()
-
