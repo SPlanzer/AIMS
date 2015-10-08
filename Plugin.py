@@ -1,6 +1,3 @@
-import pydevd
-pydevd.settrace()
-
 from PyQt4.QtGui import *
 from PyQt4.QtCore import *
 from qgis.core import *
@@ -33,8 +30,7 @@ class Plugin:
     SettingsBase="ElectoralAddressLoader/"
 
     def __init__( self, iface ):
-        #pydevd.settrace()
-        
+
         self._iface = iface
         self._statusbar = iface.mainWindow().statusBar()
         self._layers = None
