@@ -1,4 +1,3 @@
-
 ###### EDIT ##################### 
 #Directory with ui and resource files
 RESOURCE_DIR = ./
